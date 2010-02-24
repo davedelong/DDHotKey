@@ -1,10 +1,12 @@
-//
-//  DDHotKeyAppDelegate.m
-//  DDHotKey
-//
-//  Created by Dave DeLong on 2/24/10.
-//  Copyright 2010 Home. All rights reserved.
-//
+/*
+ DDHotKey -- DDHotKeyAppDelegate.m
+ 
+ Copyright (c) 2010, Dave DeLong <http://www.davedelong.com>
+ 
+ Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+ 
+ The software is  provided "as is", without warranty of any kind, including all implied warranties of merchantability and fitness. In no event shall the author(s) or copyright holder(s) be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
+ */
 
 #import "DDHotKeyAppDelegate.h"
 #import "DDHotKeyCenter.h"
@@ -37,7 +39,7 @@
 - (IBAction) registerExample1:(id)sender {
 	[self addOutput:@"Attempting to register hotkey for example 1"];
 	DDHotKeyCenter * c = [[DDHotKeyCenter alloc] init];
-	if (![c registerHotKeyWithTarget:self action:@selector(hotkeyWithEvent:) object:nil keyCode:9 modifierFlags:NSControlKeyMask]) {
+	if (![c registerHotKeyWithKeyCode:9 modifierFlags:NSControlKeyMask target:self action:@selector(hotkeyWithEvent:) object:nil]) {
 		[self addOutput:@"Unable to register hotkey for example 1"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 1"];
@@ -48,7 +50,7 @@
 - (IBAction) registerExample2:(id)sender {
 	[self addOutput:@"Attempting to register hotkey for example 2"];
 	DDHotKeyCenter * c = [[DDHotKeyCenter alloc] init];
-	if (![c registerHotKeyWithTarget:self action:@selector(hotkeyWithEvent:object:) object:@"hello, world!" keyCode:9 modifierFlags:(NSControlKeyMask | NSAlternateKeyMask)]) {
+	if (![c registerHotKeyWithKeyCode:9 modifierFlags:(NSControlKeyMask | NSAlternateKeyMask) target:self action:@selector(hotkeyWithEvent:object:) object:@"hello, world!"]) {
 		[self addOutput:@"Unable to register hotkey for example 2"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 2"];
@@ -65,7 +67,7 @@
 		[self addOutput:[NSString stringWithFormat:@"Hotkey event: %@", hkEvent]];
 		[self addOutput:[NSString stringWithFormat:@"the answer is: %d", theAnswer]];	
 	};
-	if (![c registerHotKeyWithBlock:task keyCode:9 modifierFlags:(NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask)]) {
+	if (![c registerHotKeyWithKeyCode:9 modifierFlags:(NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask) block:task]) {
 		[self addOutput:@"Unable to register hotkey for example 3"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 3"];

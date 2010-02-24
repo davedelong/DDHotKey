@@ -1,10 +1,12 @@
-//
-//  DDHotKeyManager.m
-//  EmptyAppKit
-//
-//  Created by Dave DeLong on 2/20/10.
-//  Copyright 2010 Home. All rights reserved.
-//
+/*
+ DDHotKey -- DDHotKeyCenter.m
+ 
+ Copyright (c) 2010, Dave DeLong <http://www.davedelong.com>
+ 
+ Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+ 
+ The software is  provided "as is", without warranty of any kind, including all implied warranties of merchantability and fitness. In no event shall the author(s) or copyright holder(s) be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
+ */
 
 #import "DDHotKeyCenter.h"
 #import <Carbon/Carbon.h>
@@ -132,7 +134,7 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 }
 
 #if BUILD_FOR_SNOWLEOPARD
-- (BOOL) registerHotKeyWithBlock:(DDHotKeyTask)task keyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags {
+- (BOOL) registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags block:(DDHotKeyTask)task {
 	//we can't add a new hotkey if something already has this combo
 	if ([self hasRegisteredHotKeyWithKeyCode:keyCode modifierFlags:flags]) { return NO; }
 	
@@ -154,7 +156,7 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 }
 #endif
 
-- (BOOL) registerHotKeyWithTarget:(id)target action:(SEL)action object:(id)object keyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags {
+- (BOOL) registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags target:(id)target action:(SEL)action object:(id)object {
 	//we can't add a new hotkey if something already has this combo
 	if ([self hasRegisteredHotKeyWithKeyCode:keyCode modifierFlags:flags]) { return NO; }
 	
@@ -193,7 +195,7 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 	[self unregisterHotKeysMatchingPredicate:predicate];
 }
 
-- (void) unregisterHotKeyWithTarget:(id)target action:(SEL)action {
+- (void) unregisterHotKeysWithTarget:(id)target action:(SEL)action {
 	NSPredicate * predicate = [NSPredicate predicateWithFormat:@"target = %@ AND actionString = %@", target, NSStringFromSelector(action)];
 	[self unregisterHotKeysMatchingPredicate:predicate];
 }
