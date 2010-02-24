@@ -2,9 +2,12 @@ DDHotKey
 Copyright (c) 2010, Dave DeLong <http://www.davedelong.com>
 
 **About**
-DDHotKey is an easy-to-use Cocoa wrapper around Carbon's global hotkeys, since no Cocoa equivalent 
-exists.  The purpose of DDHotKey is to provide as simple an interface as possible to creating and 
-removing global hotkeys.
+DDHotKey is an easy-to-use Cocoa class for registering an application to respond to system key 
+events, or "hotkeys".
+
+A global hotkey is a key combination that always executes a specific action, regardless of
+which app is frontmost.  For example, the Mac OS X default hotkey of "command-space" shows the 
+Spotlight search bar, even if Finder is not the frontmost application.
 
 **License**
 The license for this framework is included in every source file, and is repoduced in its entirety 
@@ -20,6 +23,7 @@ in the software.
 
 **How to use**
 First, your application will need to link against Carbon.framework.
+
 When you wish to create a hotkey, you'll need to do so via a DDHotKeyCenter object.  You may 
 alloc/init and release a DDHotKeyCenter object at anytime; it is merely an accessor to a static 
 NSSet, which holds the hotkeys in global memory.
