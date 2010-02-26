@@ -134,7 +134,7 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 }
 
 #if BUILD_FOR_SNOWLEOPARD
-- (BOOL) registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags block:(DDHotKeyTask)task {
+- (BOOL) registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags task:(DDHotKeyTask)task {
 	//we can't add a new hotkey if something already has this combo
 	if ([self hasRegisteredHotKeyWithKeyCode:keyCode modifierFlags:flags]) { return NO; }
 	

@@ -67,7 +67,7 @@
 		[self addOutput:[NSString stringWithFormat:@"Hotkey event: %@", hkEvent]];
 		[self addOutput:[NSString stringWithFormat:@"the answer is: %d", theAnswer]];	
 	};
-	if (![c registerHotKeyWithKeyCode:9 modifierFlags:(NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask) block:task]) {
+	if (![c registerHotKeyWithKeyCode:9 modifierFlags:(NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask) task:task]) {
 		[self addOutput:@"Unable to register hotkey for example 3"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 3"];

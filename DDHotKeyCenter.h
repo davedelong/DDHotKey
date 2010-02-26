@@ -34,7 +34,7 @@ typedef void (^DDHotKeyTask)(NSEvent*);
  The modifierFlags must be a bitwise OR of NSCommandKeyMask, NSAlternateKeyMask, NSControlKeyMask, or NSShiftKeyMask;
  Returns YES if the hotkey was registered; NO otherwise.
  */
-- (BOOL) registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags block:(DDHotKeyTask)task;
+- (BOOL) registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags task:(DDHotKeyTask)task;
 #endif
 
 /**
