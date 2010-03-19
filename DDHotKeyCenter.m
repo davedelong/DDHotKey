@@ -181,12 +181,13 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 }
 
 - (void) unregisterHotKeysMatchingPredicate:(NSPredicate *)predicate {
-	//when a DDHotKey is deallocated, it unregisters itself
-	//-hotKeysMatchingPredicate returns an autoreleased set
-	//so we force sooner deallocation (and unregistering) with a explicit pool
+	//explicitly unregister the hotkey, since relying on the unregistration in -dealloc can be problematic
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSSet * matches = [self hotKeysMatchingPredicate:predicate];
 	[_registeredHotKeys minusSet:matches];
+	for (DDHotKey * key in matches) {
+		[key unregisterHotKey];
+	}
 	[pool release];
 }
 
