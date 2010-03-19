@@ -30,8 +30,9 @@ alloc/init and release a `DDHotKeyCenter` object at anytime; it is merely an acc
 
 You can register a hotkey in one of two ways: via a target/action mechanism, or with a block.  The
 target/action mechanism can take a single extra "object" parameter, which it will pass into the 
-action when the hotkey is fired.  In addition, an `NSEvent` object is passed, which contains 
-information regarding the hotkey event (such as the location, the keyCode, the modifierFlags, etc).
+action when the hotkey is fired.  Both the `target` and the `object` parameters are retained by the 
+`DDHotKeyCenter`.  In addition, an `NSEvent` object is passed, which contains information regarding 
+the hotkey event (such as the location, the keyCode, the modifierFlags, etc).
 
 Hotkey actions must have one of two method signatures (the actual selector is irrelevant):
 
