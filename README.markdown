@@ -35,11 +35,13 @@ information regarding the hotkey event (such as the location, the keyCode, the m
 
 Hotkey actions must have one of two method signatures (the actual selector is irrelevant):
 
-`//a method with a single NSEvent parameter`
-`- (void) hotkeyAction:(NSEvent*)hotKeyEvent;`
+    //a method with a single NSEvent parameter
+    - (void) hotkeyAction:(NSEvent*)hotKeyEvent;
+    
  OR
-`//a method with an NSEvent parameter and an object parameter`
-`- (void) hotkeyAction:(NSEvent*)hotKeyEvent withObject:(id)anObject;`
+ 
+    //a method with an NSEvent parameter and an object parameter
+    - (void) hotkeyAction:(NSEvent*)hotKeyEvent withObject:(id)anObject;
 
 The other way to register a hotkey is with a block callback.  The block must have the following 
 signature:
