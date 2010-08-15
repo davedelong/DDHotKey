@@ -25,7 +25,7 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 	SEL action;
 	id object;
 	
-#if BUILD_FOR_SNOWLEOPARD
+#if NS_BLOCKS_AVAILABLE
 	DDHotKeyTask task;
 #endif
 	
@@ -38,7 +38,7 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 @property (retain) id target;
 @property SEL action;
 @property (retain) id object;
-#if BUILD_FOR_SNOWLEOPARD
+#if NS_BLOCKS_AVAILABLE
 @property (copy) DDHotKeyTask task;
 #endif
 @property unsigned short keyCode;
@@ -60,7 +60,7 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 	if (target != nil && action != nil && [target respondsToSelector:action]) {
 		[target performSelector:action withObject:event withObject:object];
 	}
-#if BUILD_FOR_SNOWLEOPARD
+#if NS_BLOCKS_AVAILABLE
 	else if (task != nil) {
 		task(event);
 	}
@@ -133,7 +133,7 @@ NSUInteger dd_translateModifierFlags(NSUInteger flags);
 	return ([[self hotKeysMatchingPredicate:predicate] count] > 0);
 }
 
-#if BUILD_FOR_SNOWLEOPARD
+#if NS_BLOCKS_AVAILABLE
 - (BOOL) registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags task:(DDHotKeyTask)task {
 	//we can't add a new hotkey if something already has this combo
 	if ([self hasRegisteredHotKeyWithKeyCode:keyCode modifierFlags:flags]) { return NO; }

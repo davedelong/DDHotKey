@@ -10,9 +10,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define BUILD_FOR_SNOWLEOPARD (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6)
-
-#if BUILD_FOR_SNOWLEOPARD
+#if NS_BLOCKS_AVAILABLE
 //a convenient typedef for the required signature of a hotkey block callback
 typedef void (^DDHotKeyTask)(NSEvent*);
 #endif
@@ -28,7 +26,7 @@ typedef void (^DDHotKeyTask)(NSEvent*);
  */
 - (BOOL) registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags target:(id)target action:(SEL)action object:(id)object;
 
-#if BUILD_FOR_SNOWLEOPARD
+#if NS_BLOCKS_AVAILABLE
 /**
  Register a block callback hotkey.
  The modifierFlags must be a bitwise OR of NSCommandKeyMask, NSAlternateKeyMask, NSControlKeyMask, or NSShiftKeyMask;
