@@ -15,6 +15,22 @@
 typedef void (^DDHotKeyTask)(NSEvent*);
 #endif
 
+@interface DDHotKey : NSObject
+
+@property (nonatomic, readonly, retain) id target;
+@property (nonatomic, readonly) SEL action;
+@property (nonatomic, readonly, retain) id object;
+#if NS_BLOCKS_AVAILABLE
+@property (nonatomic, readonly, copy) DDHotKeyTask task;
+#endif
+
+@property (nonatomic, readonly) unsigned short keyCode;
+@property (nonatomic, readonly) NSUInteger modifierFlags;
+
+@end
+
+#pragma mark -
+
 @interface DDHotKeyCenter : NSObject {
 
 }
@@ -37,9 +53,14 @@ typedef void (^DDHotKeyTask)(NSEvent*);
 
 /**
  See if a hotkey exists with the specified keycode and modifier flags.
- NOTE: this will only check among hotkeys you have explicitly registered. This does not check all globally registered hotkeys.
+ NOTE: this will only check among hotkeys you have explicitly registered with DDHotKeyCenter. This does not check all globally registered hotkeys.
  */
 - (BOOL) hasRegisteredHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags;
+
+/**
+ Unregister a specific hotkey
+ */
+- (void) unregisterHotKey:(DDHotKey *)hotKey;
 
 /**
  Unregister all hotkeys with a specific target
@@ -56,4 +77,10 @@ typedef void (^DDHotKeyTask)(NSEvent*);
  */
 - (void) unregisterHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags;
 
+/**
+ Returns a set of currently registered hotkeys
+ **/
+- (NSSet *) registeredHotKeys;
+
 @end
+

@@ -10,7 +10,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface DDHotKeyAppDelegate : NSObject <NSApplicationDelegate> {
+@interface DDHotKeyAppDelegate : NSObject /*<NSApplicationDelegate>*/ {
     NSWindow *window;
 	NSTextView *output;
 }

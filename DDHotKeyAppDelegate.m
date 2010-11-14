@@ -43,6 +43,7 @@
 		[self addOutput:@"Unable to register hotkey for example 1"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 1"];
+		[self addOutput:[NSString stringWithFormat:@"Registered: %@", [c registeredHotKeys]]];
 	}
 	[c release];
 }
@@ -54,11 +55,13 @@
 		[self addOutput:@"Unable to register hotkey for example 2"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 2"];
+		[self addOutput:[NSString stringWithFormat:@"Registered: %@", [c registeredHotKeys]]];
 	}
 	[c release];
 }
 
 - (IBAction) registerExample3:(id)sender {
+#if NS_BLOCKS_AVAILABLE
 	[self addOutput:@"Attempting to register hotkey for example 3"];
 	DDHotKeyCenter * c = [[DDHotKeyCenter alloc] init];
 	int theAnswer = 42;
@@ -71,8 +74,12 @@
 		[self addOutput:@"Unable to register hotkey for example 3"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 3"];
+		[self addOutput:[NSString stringWithFormat:@"Registered: %@", [c registeredHotKeys]]];
 	}
 	[c release];
+#else
+	NSRunAlertPanel(@"Blocks not available", @"This example requires the 10.6 SDK", @"OK", nil, nil);
+#endif
 }
 
 - (IBAction) unregisterExample1:(id)sender {
