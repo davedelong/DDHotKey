@@ -17,7 +17,7 @@
 static NSMutableSet * _registeredHotKeys = nil;
 static UInt32 _nextHotKeyID = 1;
 OSStatus dd_hotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void * userData);
-NSUInteger dd_translateModifierFlags(NSUInteger flags);
+UInt32 dd_translateModifierFlags(NSUInteger flags);
 NSString* dd_stringifyModifierFlags(NSUInteger flags);
 
 #pragma mark DDHotKey
@@ -122,7 +122,7 @@ NSString* dd_stringifyModifierFlags(NSUInteger flags);
 	keyID.id = _nextHotKeyID;
 	
 	EventHotKeyRef carbonHotKey;
-	NSUInteger flags = dd_translateModifierFlags(modifierFlags);
+	UInt32 flags = dd_translateModifierFlags(modifierFlags);
 	OSStatus err = RegisterEventHotKey(keyCode, flags, keyID, GetEventDispatcherTarget(), 0, &carbonHotKey);
 	
 	//error registering hot key
@@ -291,8 +291,8 @@ OSStatus dd_hotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, vo
 	return noErr;
 }
 
-NSUInteger dd_translateModifierFlags(NSUInteger flags) {
-	NSUInteger newFlags = 0;
+UInt32 dd_translateModifierFlags(NSUInteger flags) {
+	UInt32 newFlags = 0;
 	if ((flags & NSControlKeyMask) > 0) { newFlags |= controlKey; }
 	if ((flags & NSCommandKeyMask) > 0) { newFlags |= cmdKey; }
 	if ((flags & NSShiftKeyMask) > 0) { newFlags |= shiftKey; }
