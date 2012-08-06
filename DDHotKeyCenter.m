@@ -246,9 +246,7 @@ NSString* dd_stringifyModifierFlags(NSUInteger flags);
 
 @end
 
-OSStatus dd_hotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void * userData) {
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	
+OSStatus dd_hotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void * userData) {	
 	EventHotKeyID hotKeyID;
 	GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hotKeyID),NULL,&hotKeyID);
 	
@@ -271,9 +269,7 @@ OSStatus dd_hotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, vo
 										   keyCode:[matchingHotKey keyCode]];
 
 	[matchingHotKey invokeWithEvent:keyEvent];
-	
-	[pool release];
-	
+		
 	return noErr;
 }
 
