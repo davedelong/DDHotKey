@@ -143,16 +143,6 @@ NSString* dd_stringifyModifierFlags(NSUInteger flags);
 	[self setHotKeyRef:nil];
 }
 
-- (void) dealloc {
-	[target release], target = nil;
-	[object release], object = nil;
-	if (hotKeyRef != nil) {
-		[self unregisterHotKey];
-		[hotKeyRef release], hotKeyRef = nil;
-	}
-	[super dealloc];
-}
-
 @end
 
 #pragma mark DDHotKeyCenter
@@ -194,7 +184,6 @@ NSString* dd_stringifyModifierFlags(NSUInteger flags);
 		[_registeredHotKeys addObject:newHotKey];
 	}
 	
-	[newHotKey release];
 	return success;
 }
 #endif
@@ -216,17 +205,14 @@ NSString* dd_stringifyModifierFlags(NSUInteger flags);
 		[_registeredHotKeys addObject:newHotKey];
 	}
 	
-	[newHotKey release];
 	return success;
 }
 
 - (void) unregisterHotKeysMatchingPredicate:(NSPredicate *)predicate {
 	//explicitly unregister the hotkey, since relying on the unregistration in -dealloc can be problematic
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSSet * matches = [self hotKeysMatchingPredicate:predicate];
 	[_registeredHotKeys minusSet:matches];
 	[matches makeObjectsPerformSelector:@selector(unregisterHotKey)];
-	[pool release];
 }
 
 - (void) unregisterHotKey:(DDHotKey *)hotKey {
