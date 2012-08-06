@@ -12,6 +12,8 @@
 #import <Carbon/Carbon.h>
 #import <objc/runtime.h>
 
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+
 #pragma mark Private Global Declarations
 
 static NSMutableSet * _registeredHotKeys = nil;
