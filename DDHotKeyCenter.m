@@ -151,16 +151,17 @@ static DDHotKeyCenter *center = nil;
 + (id)sharedHotKeyCenter {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        center = [[DDHotKeyCenter alloc] _init];
+        center = [[DDHotKeyCenter _alloc] _init];
     });
     return center;
 }
 
++ (id)_alloc {
+    return [super allocWithZone:nil];
+}
+
 + (id)allocWithZone:(NSZone *)zone {
-    if (center == nil) {
-        return [super allocWithZone:zone];
-    }
-    return DDHK_RETAIN(center);
+    return DDHK_RETAIN([self sharedHotKeyCenter]);
 }
 
 - (id)_init {
@@ -168,6 +169,11 @@ static DDHotKeyCenter *center = nil;
     if (self) {
         _registeredHotKeys = [[NSMutableSet alloc] init];
         _nextHotKeyID = 1;
+        
+		EventTypeSpec eventSpec;
+		eventSpec.eventClass = kEventClassKeyboard;
+		eventSpec.eventKind = kEventHotKeyReleased;
+		InstallApplicationEventHandler(&dd_hotKeyHandler, 1, &eventSpec, NULL, NULL);
     }
     return self;
 }
@@ -182,8 +188,6 @@ static DDHotKeyCenter *center = nil;
 }
 
 - (BOOL)_registerHotKey:(DDHotKey *)hotKey {
-    BOOL success = NO;
-    
     EventHotKeyID keyID;
     keyID.signature = 'htk1';
     keyID.id = _nextHotKeyID;
@@ -202,7 +206,7 @@ static DDHotKeyCenter *center = nil;
     _nextHotKeyID++;
     [_registeredHotKeys addObject:hotKey];
     
-    return success;
+    return YES;
 }
 
 - (void)unregisterHotKey:(DDHotKey *)hotKey {
