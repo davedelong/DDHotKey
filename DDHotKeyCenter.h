@@ -1,7 +1,7 @@
 /*
  DDHotKey -- DDHotKeyCenter.h
  
- Copyright (c) 2012, Dave DeLong <http://www.davedelong.com>
+ Copyright (c) Dave DeLong <http://www.davedelong.com>
  
  Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
  
@@ -15,10 +15,13 @@ typedef void (^DDHotKeyTask)(NSEvent*);
 
 @interface DDHotKey : NSObject
 
-@property (nonatomic, readonly) id target;
+// creates a new hotkey but does not register it
++ (instancetype)hotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags task:(DDHotKeyTask)task;
+
+@property (nonatomic, assign, readonly) id target;
 @property (nonatomic, readonly) SEL action;
-@property (nonatomic, readonly) id object;
-@property (nonatomic, readonly) DDHotKeyTask task;
+@property (nonatomic, strong, readonly) id object;
+@property (nonatomic, copy, readonly) DDHotKeyTask task;
 
 @property (nonatomic, readonly) unsigned short keyCode;
 @property (nonatomic, readonly) NSUInteger modifierFlags;
@@ -29,21 +32,26 @@ typedef void (^DDHotKeyTask)(NSEvent*);
 
 @interface DDHotKeyCenter : NSObject
 
-+ (id)sharedHotKeyCenter;
++ (instancetype)sharedHotKeyCenter;
+
+/**
+ Register a hotkey.
+ */
+- (DDHotKey *)registerHotKey:(DDHotKey *)hotKey;
 
 /**
  Register a target/action hotkey.
  The modifierFlags must be a bitwise OR of NSCommandKeyMask, NSAlternateKeyMask, NSControlKeyMask, or NSShiftKeyMask;
- Returns YES if the hotkey was registered; NO otherwise.
+ Returns the hotkey registered.  If registration failed, returns nil.
  */
-- (BOOL)registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags target:(id)target action:(SEL)action object:(id)object;
+- (DDHotKey *)registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags target:(id)target action:(SEL)action object:(id)object;
 
 /**
  Register a block callback hotkey.
  The modifierFlags must be a bitwise OR of NSCommandKeyMask, NSAlternateKeyMask, NSControlKeyMask, or NSShiftKeyMask;
- Returns YES if the hotkey was registered; NO otherwise.
+ Returns the hotkey registered.  If registration failed, returns nil.
  */
-- (BOOL)registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags task:(DDHotKeyTask)task;
+- (DDHotKey *)registerHotKeyWithKeyCode:(unsigned short)keyCode modifierFlags:(NSUInteger)flags task:(DDHotKeyTask)task;
 
 /**
  See if a hotkey exists with the specified keycode and modifier flags.

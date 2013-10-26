@@ -1,5 +1,5 @@
 /*
- DDHotKey -- DDHotKeyAppDelegate.h
+ DDHotKey -- DDHotKeyTextField.h
  
  Copyright (c) Dave DeLong <http://www.davedelong.com>
  
@@ -8,21 +8,13 @@
  The software is  provided "as is", without warranty of any kind, including all implied warranties of merchantability and fitness. In no event shall the author(s) or copyright holder(s) be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
  */
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import "DDHotKeyCenter.h"
 
-@interface DDHotKeyAppDelegate : NSObject /*<NSApplicationDelegate>*/
+@interface DDHotKeyTextField : NSTextField
 
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSTextView *output;
-
-- (void) addOutput:(NSString *)newOutput;
-
-- (IBAction) registerExample1:(id)sender;
-- (IBAction) registerExample2:(id)sender;
-- (IBAction) registerExample3:(id)sender;
-
-- (IBAction) unregisterExample1:(id)sender;
-- (IBAction) unregisterExample2:(id)sender;
-- (IBAction) unregisterExample3:(id)sender;
+@property (nonatomic, strong) DDHotKey *hotKey;
 
 @end
+
+@interface DDHotKeyTextFieldCell : NSTextFieldCell @end
