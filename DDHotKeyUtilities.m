@@ -97,6 +97,14 @@ NSString *DDStringFromKeyCode(unsigned short keyCode, NSUInteger modifiers) {
         
         TISInputSourceRef currentKeyboard = TISCopyCurrentKeyboardInputSource();
         CFDataRef uchr = (CFDataRef)TISGetInputSourceProperty(currentKeyboard, kTISPropertyUnicodeKeyLayoutData);
+        
+        // Fix crash using non-unicode layouts, such as Chinese or Japanese.
+        if (!uchr) {
+            CFRelease(currentKeyboard);
+            currentKeyboard = TISCopyCurrentASCIICapableKeyboardLayoutInputSource();
+            uchr = (CFDataRef)TISGetInputSourceProperty(currentKeyboard, kTISPropertyUnicodeKeyLayoutData);
+        }
+        
         const UCKeyboardLayout *keyboardLayout = (const UCKeyboardLayout*)CFDataGetBytePtr(uchr);
         
         if (keyboardLayout) {
