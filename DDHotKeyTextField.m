@@ -96,6 +96,7 @@ static DDHotKeyTextFieldEditor *DDFieldEditor(void) {
                 NSString *str = DDStringFromKeyCode(_originalHotKey.keyCode, _originalHotKey.modifierFlags);
                 self.textStorage.mutableString.string = [str uppercaseString];
             }
+            [self.hotKeyField sendAction:self.hotKeyField.action to:self.hotKeyField.target];
             [self.window makeFirstResponder:nil];
             return;
         }
@@ -105,6 +106,7 @@ static DDHotKeyTextFieldEditor *DDFieldEditor(void) {
         self.hotKeyField.hotKey = [DDHotKey hotKeyWithKeyCode:event.keyCode modifierFlags:flags task:_originalHotKey.task];
         NSString *str = DDStringFromKeyCode(event.keyCode, flags);
         [self.textStorage.mutableString setString:[str uppercaseString]];
+        [self.hotKeyField sendAction:self.hotKeyField.action to:self.hotKeyField.target];
     }
 }
 
