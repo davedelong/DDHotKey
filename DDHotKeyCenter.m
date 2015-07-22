@@ -57,8 +57,9 @@ OSStatus dd_hotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, vo
 - (BOOL)isEqual:(id)object {
     BOOL equal = NO;
     if ([object isKindOfClass:[DDHotKey class]]) {
-        equal = ([object keyCode] == [self keyCode]);
-        equal &= ([object modifierFlags] == [self modifierFlags]);
+		DDHotKey* other = (DDHotKey*)object;
+        equal = ([other keyCode] == [self keyCode]);
+        equal &= ([other modifierFlags] == [self modifierFlags]);
     }
     return equal;
 }
