@@ -40,7 +40,7 @@
 - (IBAction) registerExample1:(id)sender {
 	[self addOutput:@"Attempting to register hotkey for example 1"];
 	DDHotKeyCenter *c = [DDHotKeyCenter sharedHotKeyCenter];
-	if (![c registerHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:NSControlKeyMask target:self action:@selector(hotkeyWithEvent:) object:nil]) {
+    if (![c registerHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:NSEventModifierFlagControl target:self action:@selector(hotkeyWithEvent:) object:nil]) {
 		[self addOutput:@"Unable to register hotkey for example 1"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 1"];
@@ -51,7 +51,7 @@
 - (IBAction) registerExample2:(id)sender {
 	[self addOutput:@"Attempting to register hotkey for example 2"];
 	DDHotKeyCenter *c = [DDHotKeyCenter sharedHotKeyCenter];
-	if (![c registerHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:(NSControlKeyMask | NSAlternateKeyMask) target:self action:@selector(hotkeyWithEvent:object:) object:@"hello, world!"]) {
+    if (![c registerHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:(NSEventModifierFlagControl | NSEventModifierFlagOption) target:self action:@selector(hotkeyWithEvent:object:) object:@"hello, world!"]) {
 		[self addOutput:@"Unable to register hotkey for example 2"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 2"];
@@ -69,7 +69,7 @@
 		[self addOutput:[NSString stringWithFormat:@"Hotkey event: %@", hkEvent]];
 		[self addOutput:[NSString stringWithFormat:@"the answer is: %d", theAnswer]];	
 	};
-	if (![c registerHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:(NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask) task:task]) {
+    if (![c registerHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:(NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand) task:task]) {
 		[self addOutput:@"Unable to register hotkey for example 3"];
 	} else {
 		[self addOutput:@"Registered hotkey for example 3"];
@@ -82,19 +82,19 @@
 
 - (IBAction) unregisterExample1:(id)sender {
 	DDHotKeyCenter *c = [DDHotKeyCenter sharedHotKeyCenter];
-	[c unregisterHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:NSControlKeyMask];
+    [c unregisterHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:NSEventModifierFlagControl];
 	[self addOutput:@"Unregistered hotkey for example 1"];
 }
 
 - (IBAction) unregisterExample2:(id)sender {
 	DDHotKeyCenter *c = [DDHotKeyCenter sharedHotKeyCenter];
-	[c unregisterHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:(NSControlKeyMask | NSAlternateKeyMask)];
+    [c unregisterHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:(NSEventModifierFlagControl | NSEventModifierFlagOption)];
 	[self addOutput:@"Unregistered hotkey for example 2"];
 }
 
 - (IBAction) unregisterExample3:(id)sender {
 	DDHotKeyCenter *c = [DDHotKeyCenter sharedHotKeyCenter];
-	[c unregisterHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:(NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask)];
+    [c unregisterHotKeyWithKeyCode:kVK_ANSI_V modifierFlags:(NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand)];
 	[self addOutput:@"Unregistered hotkey for example 3"];
 }
 
