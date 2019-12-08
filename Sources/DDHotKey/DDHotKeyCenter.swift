@@ -14,13 +14,13 @@ public class DDHotKeyCenter {
         case alreadyRegistered
         case tooManyHotKeys
         case conflictsWithExistingHotKey(DDHotKey)
-        case unableToRegisterHotKey(OSStatus)
+        case cannotRegisterHotKey(OSStatus)
     }
     
     public enum UnregistrationError: Error {
         case notRegistered
         case unknownHotKey
-        case unableToUnregisterHotKey(OSStatus)
+        case cannotUnregisterHotKey(OSStatus)
     }
     
     public static let shared = DDHotKeyCenter()
@@ -72,7 +72,7 @@ public class DDHotKeyCenter {
         let error = RegisterEventHotKey(UInt32(hotKey.keyCode), flags, hotKeyID, GetEventDispatcherTarget(), 0, &hotKeyRef)
         
         if error != noErr {
-            throw RegistrationError.unableToRegisterHotKey(error)
+            throw RegistrationError.cannotRegisterHotKey(error)
         }
         
         hotKey.hotKeyRef = hotKeyRef
@@ -94,7 +94,7 @@ public class DDHotKeyCenter {
         let status = UnregisterEventHotKey(ref)
         
         guard status == noErr else {
-            throw UnregistrationError.unableToUnregisterHotKey(status)
+            throw UnregistrationError.cannotUnregisterHotKey(status)
         }
         
         registered.removeValue(forKey: hotKey.uuid)

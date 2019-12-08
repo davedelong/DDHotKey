@@ -15,9 +15,9 @@ public class DDHotKey {
     internal let uuid = UUID()
     internal let keyCode: CGKeyCode
     internal let modifiers: NSEvent.ModifierFlags
-    internal let handler: (NSEvent) -> Void
+    public var handler: ((NSEvent) -> Void)?
     
-    public init(keyCode: CGKeyCode, modifiers: NSEvent.ModifierFlags, handler: @escaping (NSEvent) -> Void) {
+    public init(keyCode: CGKeyCode, modifiers: NSEvent.ModifierFlags, handler: ((NSEvent) -> Void)? = nil) {
         self.keyCode = keyCode
         self.modifiers = modifiers
         self.handler = handler
@@ -32,7 +32,7 @@ public class DDHotKey {
     }
     
     internal func invoke(with event: NSEvent) {
-        handler(event)
+        handler?(event)
     }
 }
 
